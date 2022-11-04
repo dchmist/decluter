@@ -13,8 +13,27 @@ protected:
     data::DataConverter sut{};
 };
 
-TEST_F(TestDataConverter, convertNoData)
+TEST_F(TestDataConverter, convertValidData)
 {
-    EXPECT_THROW(sut.convertData({}), std::string);
+}
+
+TEST_F(TestDataConverter, throwMisingDataInSample)
+{
+    // EXPECT_THROW(sut.convertData({}), std::string);
+}
+
+TEST_F(TestDataConverter, throwIncorrectDataFormat)
+{
+    // EXPECT_THROW(sut.convertData({}), std::string);
+}
+
+TEST_F(TestDataConverter, throwEmptyDirstOrLastField)
+{
+    // EXPECT_THROW(sut.convertData({}), std::string);
+}
+
+TEST_F(TestDataConverter, throwCannotConvertData)
+{
+    // EXPECT_THROW(sut.convertData({}), std::string);
 }
 } // tests

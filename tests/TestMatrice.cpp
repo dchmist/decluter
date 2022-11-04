@@ -4,7 +4,7 @@
 
 #include <string>
 
-bool operator==(const data::Point& lhs, const data::Point& rhs)
+bool operator==(const data::Coordinates& lhs, const data::Coordinates& rhs)
 {
     return lhs.x == rhs.x and lhs.y == rhs.y;
 }

@@ -7,7 +7,9 @@ set(HOME_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${HOME_DIR})
 
 add_library(declutter SHARED
+    Declutter.cpp
     data/DataConverter.cpp
+    data/Coordinates.cpp
     helpers/ErrorHandler.cpp
     helpers/FileHandler.cpp
     transformation/Matrice.cpp

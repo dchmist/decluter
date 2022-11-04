@@ -18,6 +18,7 @@ std::vector<std::string> FileHandler::getDataFromFile(const std::string& filePat
     std::string temp{};
     while(std::getline(file, temp))
     {
+        temp.pop_back();
         data.push_back(temp);
     }
     return data;

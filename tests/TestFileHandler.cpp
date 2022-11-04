@@ -11,7 +11,7 @@ class TestFileHandler : public Test
 {
 protected:
     helpers::FileHandler sut{};
-    const std::string pathFile{"/mnt/c/Workspace/C++17 Receptury/Declutter/data.txt"};
+    const std::string pathFile{"put/path/to/file/with/data"};
 };
 
 TEST_F(TestFileHandler, openFileSucceed)

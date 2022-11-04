@@ -6,6 +6,7 @@
 
 namespace data
 {
+
 struct Point
 {
     double x;
@@ -13,20 +14,14 @@ struct Point
 
     void fillFromString(const std::string& input)
     {
-        const auto splitterPosition = input.find(':');
-        if (splitterPosition == std::string::npos)
+        const auto firstSplitterPosition = input.find(':');
+        if (firstSplitterPosition == std::string::npos)
         {
-            helpers::ErrorHandler::handleError("Incorrect PointType");
+            helpers::ErrorHandler::handleError("Incorrect coordinates : " + input);
         }
         
-        x = std::stod(input.substr(0, splitterPosition));
-        y = std::stod(input.substr(splitterPosition+1, input.size() - splitterPosition));
-    }
-
-    void shift(const Point& shift) noexcept
-    {
-        x += shift.x;
-        y += shift.y;
+        x = std::stod(input.substr(0, firstSplitterPosition));
+        y = std::stod(input.substr(firstSplitterPosition + 1, input.size() - firstSplitterPosition));
     }
 };
-} //data
+} // data

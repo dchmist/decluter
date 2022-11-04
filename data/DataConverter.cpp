@@ -9,7 +9,7 @@
 
 namespace data
 {
-static size_t innerIndex{0};
+static size_t innerIndex{1};
 
 std::vector<DataSet> DataConverter::convertData(const std::vector<std::string>& rawData) const noexcept
 {
@@ -44,9 +44,6 @@ DataSet DataConverter::convertDataSample(const std::string& sample) const
 	    std::advance(arrayIt, 1);
 	}
 
-    std::copy(stringDataSet.cbegin(), stringDataSet.cend(), std::ostream_iterator<std::string>{std::cout, ", "});
-    std::cout << '\n';
-
     return convertStringToDataSetFormat(stringDataSet);
 }
 
@@ -54,18 +51,18 @@ void DataConverter::verifyData(const std::string& sample) const
 {
     if(const auto amounfOfSplitter = std::count(sample.cbegin(), sample.cend(), splitter); amounfOfSplitter != 4)
     {
-        helpers::ErrorHandler::handleError("Incorrect data format");
+        helpers::ErrorHandler::handleError("Incorrect data format of : " + sample);
     }
     else if(sample.front() == ';' or sample.back() == ';' )
     {
-        helpers::ErrorHandler::handleError("Empty first or last field");
+        helpers::ErrorHandler::handleError("Empty first or last field of : " + sample);
     }
 
     for(size_t i = 0; i < sample.size()-1; i++)
     {
         if(sample.at(i) == ';' and sample.at(i+1) == ';')
         {
-            helpers::ErrorHandler::handleError("Mising data in sample");
+            helpers::ErrorHandler::handleError("Mising data in sample of : " + sample);
         }
     }
 }
@@ -85,7 +82,7 @@ DataSet DataConverter::convertStringToDataSetFormat(std::array<std::string, 5>& 
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
-        helpers::ErrorHandler::handleError("Cannot conver data");
+        helpers::ErrorHandler::handleError("Cannot convert data");
     }
     output.index = innerIndex;
     innerIndex++;

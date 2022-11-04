@@ -1,27 +1,26 @@
-#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <iterator>
 
+#include "Declutter.hpp"
+// #include "data/DataSet.hpp"
 #include "data/DataConverter.hpp"
-#include "data/DataSet.hpp"
 #include "helpers/FileHandler.hpp"
-#include "transformation/Matrice.hpp"
 
 
-void print(const std::vector<data::DataSet>& data)
-{
-    for(const auto& dataSet : data)
-    {
-        std::cout << dataSet.index << ", "
-            << dataSet.name << ", "
-            << dataSet.pivotPoint.x << ":" << dataSet.pivotPoint.y  << ", "
-            << dataSet.position.x << ":" << dataSet.position.y  << ", "
-            << dataSet.priority << ", "
-            << dataSet.size << std::endl;
-    }
-}
+
+// void print(const std::vector<data::DataSet>& data)
+// {
+//     for(const auto& dataSet : data)
+//     {
+//         std::cout << dataSet.index << ", "
+//             << dataSet.name << ", "
+//             << dataSet.pivotPoint.x << ":" << dataSet.pivotPoint.y  << ", "
+//             << dataSet.position.origin.x << ":" << dataSet.position.origin.y  << ':' << dataSet.position.scale << ", "
+//             << dataSet.priority << ", "
+//             << dataSet.size << std::endl;
+//     }
+// }
 
 int main(int argc, char* argv[])
 {
@@ -41,23 +40,14 @@ int main(int argc, char* argv[])
     catch(const std::string& e)
     {
         std::cerr << e << '\n';
-    }    
+        return -1;
+    }
 
     const data::DataConverter dataConverter{};
-    auto convertedData{dataConverter.convertData(rawData)};
+    auto dataSetStorage{dataConverter.convertData(rawData)};
 
-    //sort
-    const auto comparePriorities = [](const data::DataSet& lhs, const data::DataSet& rhs)
-    {
-        return lhs.priority > rhs.priority;
-    };
-    std::sort(convertedData.begin(), convertedData.end(), comparePriorities);
-
-    std::cout << "Sorted:\n";
-    print(convertedData);
-
-    transformation::Matrice matrice{};
-    matrice.transform(convertedData);
+    Declutter declutter{};
+    declutter.printListOfIndexes(dataSetStorage);
 
     return 0;
 }

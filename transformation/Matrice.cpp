@@ -4,21 +4,27 @@
 
 namespace transformation
 {
-Matrice::Matrice(const data::Point& shift, const double zoom)
-    : shift(shift)
+Matrice::Matrice(const data::Point& shift, const double zoom, const double scale)
+    : matriceShift(shift)
     , zoom(zoom)
+    , scale(scale)
 {
 
 }
 void Matrice::transform(std::vector<data::DataSet>& inputData) const noexcept
 {
-    /*
-    const auto matriceTransfrom = [](data::DataSet& data)
+
+    auto matriceTransfrom = [&](data::DataSet& data)
     {
-        data.position.shift(shift);
-        // what can I do with zoom
-    }
-    std::transform(inputData.begin(), inputData.end(), matriceTransfrom);
-    */
+        const auto multiplier = data.position.scale / scale;
+        data.position.origin.x *= multiplier;
+        data.position.origin.y *= multiplier;
+
+        data.position.origin.x *= zoom/100;
+        data.position.origin.y *= zoom/100;
+
+        data.position.shift(matriceShift);
+    };
+    std::for_each(inputData.begin(), inputData.end(), matriceTransfrom);
 }
 } // transformation
